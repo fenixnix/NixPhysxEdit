@@ -137,7 +137,7 @@ void MainWindow::updateAtt(NBObject *obj)
         }
         if(jointType == "prismatic"){
             //uiJointComm.setJoint(joint->toJointRevolute());
-            changeCurrentWidget(&uiJointComm);
+            changeCurrentWidget(&uiJointPrismatic);
         }
         qDebug()<<__FUNCTION__<<__LINE__<<jointType<<"!!!";
     }

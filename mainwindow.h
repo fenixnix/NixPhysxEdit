@@ -12,7 +12,7 @@
 #include "formfixture.h"
 #include "formjointdistance.h"
 #include "formjointrevolute.h"
-#include "AttributeUI/uijointcomm.h"
+#include "AttributeUI/uijointprismatic.h"
 
 namespace Ui {
   class MainWindow;
@@ -87,7 +87,7 @@ private:
   FormFixture formFixture;
   FormJointDistance formJointDistance;
   FormJointRevolute formJointRevolute;
-  UIJointComm uiJointComm;
+  UIJointPrismatic uiJointPrismatic;
 };
 
 #endif // MAINWINDOW_H

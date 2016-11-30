@@ -63,8 +63,9 @@ SOURCES += main.cpp\
     shapeeditpainter.cpp \
     nbqgeditshapepolygon.cpp \
     obj/nbjointprismatic.cpp \
-    formjointprismatic.cpp \
-    AttributeUI/uijointcomm.cpp
+    formjoint.cpp \
+    formjointprismaticatt.cpp \
+    AttributeUI/uijointprismatic.cpp
 
 HEADERS  += mainwindow.h \
     ../_src/b2physx.h \
@@ -117,8 +118,9 @@ HEADERS  += mainwindow.h \
     shapeeditpainter.h \
     nbqgeditshapepolygon.h \
     obj/nbjointprismatic.h \
-    formjointprismatic.h \
-    AttributeUI/uijointcomm.h
+    formjoint.h \
+    formjointprismaticatt.h \
+    AttributeUI/uijointprismatic.h
 
 FORMS    += mainwindow.ui \
     formrigidbody.ui \
@@ -135,7 +137,8 @@ FORMS    += mainwindow.ui \
     formvec2dedit.ui \
     formfloatvalue.ui \
     dialogshapepolygonedit.ui \
-    formjointprismatic.ui
+    formjoint.ui \
+    formjointprismaticatt.ui
 
 INCLUDEPATH += ../_src/
 include(D:/workspace/include/Box2D.pri)
