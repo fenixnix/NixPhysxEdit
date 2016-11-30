@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1039</width>
+    <height>769</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Nix Box2d Editor</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QVBoxLayout" name="verticalLayout_2">
+    <item>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QTreeWidget" name="treeWidget_Layer">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <attribute name="headerVisible">
+         <bool>false</bool>
+        </attribute>
+        <column>
+         <property name="text">
+          <string notr="true">1</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget_2">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="tabPosition">
+         <enum>QTabWidget::East</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_3">
+         <attribute name="title">
+          <string>Body</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_4">
+          <item>
+           <widget class="QListWidget" name="listWidget_RigidBodys">
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>16777215</height>
+             </size>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_4">
+         <attribute name="title">
+          <string>Joint</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_6">
+          <item>
+           <widget class="QListWidget" name="listWidget_Joint">
+            <property name="mouseTracking">
+             <bool>true</bool>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="QTabWidget" name="tabWidget_3">
+        <property name="maximumSize">
+         <size>
+          <width>100</width>
+          <height>16777215</height>
+         </size>
+        </property>
+        <property name="tabPosition">
+         <enum>QTabWidget::East</enum>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="tab_5">
+         <attribute name="title">
+          <string>Fixture</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_5">
+          <item>
+           <widget class="QListWidget" name="listWidget_Fixtures">
+            <property name="maximumSize">
+             <size>
+              <width>120</width>
+              <height>16777215</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab_6">
+         <attribute name="title">
+          <string>Shape</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout_7">
+          <item>
+           <widget class="QListWidget" name="listWidget_Shape">
+            <property name="mouseTracking">
+             <bool>true</bool>
+            </property>
+            <property name="contextMenuPolicy">
+             <enum>Qt::CustomContextMenu</enum>
+            </property>
+            <item>
+             <property name="text">
+              <string>Empty</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </widget>
+      </item>
+      <item>
+       <widget class="MainGLWidget" name="openGLWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="MinimumExpanding" vsizetype="Preferred">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="minimumSize">
+         <size>
+          <width>400</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::ClickFocus</enum>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QScrollArea" name="scrollArea">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>60</height>
+       </size>
+      </property>
+      <property name="widgetResizable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="scrollAreaWidgetContents">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>0</y>
+         <width>996</width>
+         <height>58</height>
+        </rect>
+       </property>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>LeftToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1039</width>
+     <height>25</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>File</string>
+    </property>
+    <addaction name="actionSave"/>
+    <addaction name="actionLoad"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport"/>
+    <addaction name="separator"/>
+    <addaction name="actionExport_Unit"/>
+    <addaction name="actionImport_Unit"/>
+    <addaction name="actionTest_read"/>
+   </widget>
+   <widget class="QMenu" name="menuWorld">
+    <property name="title">
+     <string>World</string>
+    </property>
+    <addaction name="actionGravity"/>
+    <addaction name="actionWorld_Box"/>
+    <addaction name="separator"/>
+    <addaction name="actionRun"/>
+    <addaction name="actionPause"/>
+    <addaction name="actionStop"/>
+    <addaction name="actionCreate_Unit"/>
+   </widget>
+   <widget class="QMenu" name="menuJoint">
+    <property name="title">
+     <string>Joint</string>
+    </property>
+    <addaction name="actionDistance"/>
+    <addaction name="actionRevolute"/>
+    <addaction name="actionPrismatic"/>
+    <addaction name="actionPulley"/>
+    <addaction name="separator"/>
+    <addaction name="actionGear"/>
+    <addaction name="actionWheel"/>
+    <addaction name="actionWeld"/>
+    <addaction name="actionRop"/>
+    <addaction name="actionFriction"/>
+    <addaction name="actionMotor"/>
+   </widget>
+   <widget class="QMenu" name="menuPrefab">
+    <property name="title">
+     <string>Prefab</string>
+    </property>
+    <widget class="QMenu" name="menuShape_2">
+     <property name="title">
+      <string>Shape</string>
+     </property>
+     <addaction name="actionCircle"/>
+     <addaction name="actionPolygon"/>
+     <addaction name="actionEdge"/>
+     <addaction name="actionChain"/>
+    </widget>
+    <addaction name="actionRigidBody"/>
+    <addaction name="actionFixture"/>
+    <addaction name="actionFilter"/>
+    <addaction name="menuShape_2"/>
+   </widget>
+   <widget class="QMenu" name="menuEdit">
+    <property name="title">
+     <string>Edit</string>
+    </property>
+    <addaction name="actionAdd"/>
+    <addaction name="actionNew"/>
+   </widget>
+   <widget class="QMenu" name="menuAbout">
+    <property name="title">
+     <string>Help</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionManual"/>
+    <addaction name="actionWeb_site"/>
+    <addaction name="actionHelp"/>
+   </widget>
+   <widget class="QMenu" name="menuDirect">
+    <property name="title">
+     <string>Direct</string>
+    </property>
+    <addaction name="actionCircle_Object"/>
+    <addaction name="actionSquare_Object"/>
+    <addaction name="actionTrangle_Object"/>
+   </widget>
+   <addaction name="menuFile"/>
+   <addaction name="menuWorld"/>
+   <addaction name="menuDirect"/>
+   <addaction name="menuEdit"/>
+   <addaction name="menuJoint"/>
+   <addaction name="menuPrefab"/>
+   <addaction name="menuAbout"/>
+  </widget>
+  <action name="actionLoad">
+   <property name="text">
+    <string>Load</string>
+   </property>
+  </action>
+  <action name="actionSave">
+   <property name="text">
+    <string>Save</string>
+   </property>
+  </action>
+  <action name="actionGravity">
+   <property name="text">
+    <string>Gravity</string>
+   </property>
+  </action>
+  <action name="actionWorld_Box">
+   <property name="text">
+    <string>World Box</string>
+   </property>
+  </action>
+  <action name="actionRun">
+   <property name="text">
+    <string>Run</string>
+   </property>
+  </action>
+  <action name="actionStop">
+   <property name="text">
+    <string>Stop</string>
+   </property>
+  </action>
+  <action name="actionExport">
+   <property name="text">
+    <string>Export</string>
+   </property>
+  </action>
+  <action name="actionAdd">
+   <property name="text">
+    <string>Add RigidBody</string>
+   </property>
+  </action>
+  <action name="actionBox">
+   <property name="text">
+    <string>Box</string>
+   </property>
+  </action>
+  <action name="actionCircle">
+   <property name="text">
+    <string>Circle</string>
+   </property>
+  </action>
+  <action name="actionPolygon">
+   <property name="text">
+    <string>Polygon</string>
+   </property>
+  </action>
+  <action name="actionEdge">
+   <property name="text">
+    <string>Edge</string>
+   </property>
+  </action>
+  <action name="actionChain">
+   <property name="text">
+    <string>Chain</string>
+   </property>
+  </action>
+  <action name="actionNew">
+   <property name="text">
+    <string>Add Fixtrue</string>
+   </property>
+  </action>
+  <action name="actionDistance">
+   <property name="text">
+    <string>Distance</string>
+   </property>
+  </action>
+  <action name="actionRevolute">
+   <property name="text">
+    <string>Revolute</string>
+   </property>
+  </action>
+  <action name="actionMotor">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Motor</string>
+   </property>
+  </action>
+  <action name="actionPrismatic">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Prismatic</string>
+   </property>
+  </action>
+  <action name="actionPulley">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Pulley</string>
+   </property>
+  </action>
+  <action name="actionGear">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Gear</string>
+   </property>
+  </action>
+  <action name="actionWheel">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Wheel</string>
+   </property>
+  </action>
+  <action name="actionWeld">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Weld</string>
+   </property>
+  </action>
+  <action name="actionRop">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Rop</string>
+   </property>
+  </action>
+  <action name="actionFriction">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Friction</string>
+   </property>
+  </action>
+  <action name="actionCreate_Unit">
+   <property name="text">
+    <string>Create Unit</string>
+   </property>
+  </action>
+  <action name="actionExport_Unit">
+   <property name="text">
+    <string>Export Unit</string>
+   </property>
+  </action>
+  <action name="actionImport_Unit">
+   <property name="text">
+    <string>Import Unit</string>
+   </property>
+  </action>
+  <action name="actionNew_Filter_Prefab">
+   <property name="text">
+    <string>New Filter Prefab</string>
+   </property>
+  </action>
+  <action name="actionNew_RigidBody_Prefab">
+   <property name="text">
+    <string>New RigidBody Prefab</string>
+   </property>
+  </action>
+  <action name="actionNew_Fixture_Prefab">
+   <property name="text">
+    <string>New Fixture Prefab</string>
+   </property>
+  </action>
+  <action name="actionRigidBody">
+   <property name="text">
+    <string>RigidBody</string>
+   </property>
+  </action>
+  <action name="actionFixture">
+   <property name="text">
+    <string>Fixture</string>
+   </property>
+  </action>
+  <action name="actionFilter">
+   <property name="text">
+    <string>Filter</string>
+   </property>
+  </action>
+  <action name="actionHelp">
+   <property name="text">
+    <string>About</string>
+   </property>
+  </action>
+  <action name="actionManual">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Manual</string>
+   </property>
+  </action>
+  <action name="actionWeb_site">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Web site</string>
+   </property>
+  </action>
+  <action name="actionPause">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Pause</string>
+   </property>
+  </action>
+  <action name="actionTest_read">
+   <property name="text">
+    <string>test read</string>
+   </property>
+  </action>
+  <action name="actionCircle_Object">
+   <property name="text">
+    <string>Circle Object</string>
+   </property>
+  </action>
+  <action name="actionSquare_Object">
+   <property name="text">
+    <string>Square Object</string>
+   </property>
+  </action>
+  <action name="actionTrangle_Object">
+   <property name="text">
+    <string>Trangle Object</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>MainGLWidget</class>
+   <extends>QOpenGLWidget</extends>
+   <header location="global">mainglwidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>
