@@ -1,16 +1,24 @@
 #include "nbqgeditjointrevolute.h"
-#include "obj/nbjointrevolute.h"
 
 NBQGEditJointRevolute::NBQGEditJointRevolute()
 {
+    joint = nullptr;
     selArr.push_back(false);
+}
+
+void NBQGEditJointRevolute::setNBObj(NBObject *obj)
+{
+    joint = obj->toJoint()->toJointRevolute();
 }
 
 void NBQGEditJointRevolute::click(float x, float y)
 {
-    NBJointRevolute *j = obj->toJoint()->toJointRevolute();
+    if(!joint){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
     b2Vec2 ap;
-    ap = j->anchor;
+    ap = joint->anchor;
     if(widget->CheckPointSelect(QPointF(ap.x,ap.y),QPointF(x,y))){
         selArr[0] = true;
         return;
@@ -19,10 +27,13 @@ void NBQGEditJointRevolute::click(float x, float y)
 
 void NBQGEditJointRevolute::move(float x, float y)
 {
-    NBJointRevolute *j = obj->toJoint()->toJointRevolute();
+    if(!joint){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
     if(selArr[0]){
-        j->anchor.x = x;
-        j->anchor.y = y;
+        joint->anchor.x = x;
+        joint->anchor.y = y;
         widget->update();
         return;
     }
@@ -30,8 +41,11 @@ void NBQGEditJointRevolute::move(float x, float y)
 
 void NBQGEditJointRevolute::draw()
 {
-    NBJointRevolute *j = obj->toJoint()->toJointRevolute();
+    if(!joint){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
     widget->glColor4f(1,0,0,1);
     float size = widget->getWorldPixelSize();
-    widget->drawRect(j->anchor.x,j->anchor.y,size,size);
+    widget->drawRect(joint->anchor.x,joint->anchor.y,size,size);
 }

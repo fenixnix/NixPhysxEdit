@@ -203,6 +203,7 @@ void NQOpenGL2DWidget::mouseReleaseEvent(QMouseEvent *event)
 {
     viewMov = false;
     rel();
+    emit finishEdit();
 }
 
 void NQOpenGL2DWidget::mouseMoveEvent(QMouseEvent *event)

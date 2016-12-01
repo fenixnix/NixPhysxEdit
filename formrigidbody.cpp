@@ -18,47 +18,47 @@ FormRigidBody::~FormRigidBody()
 
 void FormRigidBody::setBody(NBBody *body)
 {
-    def2 = body;
-    def = &body->def;
-    upload();
-}
-
-void FormRigidBody::setB2Body(b2BodyDef *bodyDef)
-{
-    qDebug()<<__FUNCTION__;
-    def = bodyDef;
+    def = body;
     upload();
 }
 
 void FormRigidBody::upload()
 {
-    ui->type->setCurrentIndex(def->type);
-    ui->x->setValue(def->position.x);
-    ui->y->setValue(def->position.y);
-    ui->angle->setValue(def->angle);
-    ui->linearDamping->setValue(def->linearDamping);
-    ui->angularDamping->setValue(def->angularDamping);
-    ui->allowSleep->setChecked(def->allowSleep);
-    ui->awake->setChecked(def->awake);
-    ui->fixedRotation->setChecked(def->fixedRotation);
-    ui->active->setChecked(def->active);
-    ui->gravityScale->setValue(def->gravityScale);
+    if(!def){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
+    ui->type->setCurrentIndex(def->def.type);
+    ui->x->setValue(def->def.position.x);
+    ui->y->setValue(def->def.position.y);
+    ui->angle->setValue(def->def.angle);
+    ui->linearDamping->setValue(def->def.linearDamping);
+    ui->angularDamping->setValue(def->def.angularDamping);
+    ui->allowSleep->setChecked(def->def.allowSleep);
+    ui->awake->setChecked(def->def.awake);
+    ui->fixedRotation->setChecked(def->def.fixedRotation);
+    ui->active->setChecked(def->def.active);
+    ui->gravityScale->setValue(def->def.gravityScale);
 }
 
 void FormRigidBody::download()
 {
-    def->type = ((b2BodyType)ui->type->currentIndex());
-    def->position.x = ui->x->value();
-    def->position.y = ui->y->value();
-    def->angle = ui->angle->value()*M_PI/180;
-    def->linearDamping = ui->linearDamping->value();
-    def->angularDamping = ui->angularDamping->value();
-    def->allowSleep = ui->allowSleep->checkState();
-    def->awake = ui->awake->checkState();
-    def->fixedRotation = ui->fixedRotation->checkState();
-    def->bullet = ui->bullet->checkState();
-    def->active = ui->active->checkState();
-    def->gravityScale = ui->gravityScale->value();
+    if(!def){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
+    def->def.type = ((b2BodyType)ui->type->currentIndex());
+    def->def.position.x = ui->x->value();
+    def->def.position.y = ui->y->value();
+    def->def.angle = ui->angle->value()*M_PI/180;
+    def->def.linearDamping = ui->linearDamping->value();
+    def->def.angularDamping = ui->angularDamping->value();
+    def->def.allowSleep = ui->allowSleep->checkState();
+    def->def.awake = ui->awake->checkState();
+    def->def.fixedRotation = ui->fixedRotation->checkState();
+    def->def.bullet = ui->bullet->checkState();
+    def->def.active = ui->active->checkState();
+    def->def.gravityScale = ui->gravityScale->value();
 }
 
 void FormRigidBody::on_pushButton_OK_clicked()

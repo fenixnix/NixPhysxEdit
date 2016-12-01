@@ -28,6 +28,7 @@ MainWindow::MainWindow(QWidget *parent) :
     nullWidget->setMaximumWidth(0);
     curWidget = nullWidget;
     ui->horizontalLayout->addWidget(curWidget);
+    QObject::connect(ui->openGLWidget,&NQOpenGL2DWidget::finishEdit,this,&MainWindow::refreshAtt);
 }
 
 MainWindow::~MainWindow()
@@ -136,7 +137,7 @@ void MainWindow::updateAtt(NBObject *obj)
             changeCurrentWidget(&formJointRevolute);
         }
         if(jointType == "prismatic"){
-            //uiJointComm.setJoint(joint->toJointRevolute());
+            uiJointPrismatic.attchJoint(joint);
             changeCurrentWidget(&uiJointPrismatic);
         }
         qDebug()<<__FUNCTION__<<__LINE__<<jointType<<"!!!";
@@ -146,6 +147,19 @@ void MainWindow::updateAtt(NBObject *obj)
         changeCurrentWidget(&formFixture);
     }
     update();//!!!可以删除
+}
+
+void MainWindow::refreshAtt()
+{
+    qDebug()<<__FUNCTION__<<__LINE__;
+    if(curWidget){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        formBody.upload();
+        formFixture.upload();
+        formJointDistance.upload();
+        formJointRevolute.upload();
+        uiJointPrismatic.upload();
+    }
 }
 
 void MainWindow::addNewJoint(QString jointType)

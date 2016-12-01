@@ -17,10 +17,10 @@ public:
     virtual void move(float x, float y) = 0;
     virtual void rel();
     virtual void draw() = 0;
-//private:
-    NBObject *obj;
+protected:
     NQOpenGL2DWidget *widget;
     QVector<bool> selArr;
+    NBObject *obj;
 };
 
 #endif // NBQGEDIT_H

@@ -37,6 +37,7 @@ public slots:
   void updateAllList();
 
   void updateAtt(NBObject* obj);
+  void refreshAtt();
 
   void addNewJoint(QString jointType);
 

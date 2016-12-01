@@ -13,6 +13,7 @@
 
 class NQOpenGL2DWidget : public QOpenGLWidget,public QOpenGLFunctions_4_3_Compatibility
 {
+    Q_OBJECT
 public:
     explicit NQOpenGL2DWidget(QWidget *parent = 0);
     void initializeGL();
@@ -38,6 +39,10 @@ public:
     void mouseReleaseEvent(QMouseEvent *event);
     void mouseMoveEvent(QMouseEvent *event);
     void wheelEvent(QWheelEvent* event);
+
+signals:
+    void finishEdit();
+
 private:
     QVector3D camPos;
     QPointF mousePos;

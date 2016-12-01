@@ -6,6 +6,7 @@
 #include "nbqgeditshapepolygon.h"
 #include "nbqgeditjointdistance.h"
 #include "nbqgeditjointrevolute.h"
+#include "nbqgeditjointprismatic.h"
 
 NBQGEdit::NBQGEdit()
 {
@@ -40,9 +41,13 @@ NBQGEdit *NBQGEdit::create(NBObject *o, NQOpenGL2DWidget *widget)
             //qDebug()<<__FUNCTION__<<__LINE__;
             editor = new NBQGEditJointRevolute;
         }
+        if(j->getJointType() == "prismatic"){
+            //qDebug()<<__FUNCTION__<<__LINE__;
+            editor = new NBQGEditJointPrismatic;
+        }
     }
     if(editor){
-        editor->obj = o;
+        editor->setNBObj(o);
         editor->widget = widget;
     }else{
         qDebug()<<__FUNCTION__<<__LINE__<<"warning!!!";
@@ -60,7 +65,7 @@ void NBQGEdit::releaseEdit(NBQGEdit *editor)
 
 void NBQGEdit::setNBObj(NBObject *obj)
 {
-
+    this->obj = obj;
 }
 
 void NBQGEdit::rel()

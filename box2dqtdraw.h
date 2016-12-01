@@ -20,9 +20,7 @@ public:
     void DrawTransform(const b2Transform& xf);
 
     void static drawBody(NQOpenGL2DWidget *gl, b2BodyDef *body);
-
     void static drawJoint(NQOpenGL2DWidget *gl, NBJoint *joint);
-
     void static drawFixture(NQOpenGL2DWidget* gl, b2FixtureDef* fixture);
     void static drawCircleShape(NQOpenGL2DWidget* gl, b2CircleShape* shape);
     void static drawPolygonShape(NQOpenGL2DWidget* gl,b2PolygonShape* shape);

@@ -17,13 +17,17 @@ FormFixture::~FormFixture()
 
 void FormFixture::setFixture(NBFixture *f)
 {
-    def = f;
+    this->def = f;
     qDebug()<<__FUNCTION__<<__LINE__<<f->def.density;
     upload();
 }
 
 void FormFixture::upload()
 {
+    if(!def){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
     ui->friction->setValue(def->def.friction);
     ui->restitiution->setValue(def->def.restitution);
     ui->density->setValue(def->def.density);
@@ -33,6 +37,10 @@ void FormFixture::upload()
 
 void FormFixture::download()
 {
+    if(!def){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
     def->def.friction = ui->friction->value();
     def->def.restitution = ui->restitiution->value();
     def->def.density = ui->density->value();

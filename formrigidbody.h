@@ -18,7 +18,7 @@ public:
     explicit FormRigidBody(QWidget *parent = 0);
     ~FormRigidBody();
     void setBody(NBBody* body);
-    void setB2Body(b2BodyDef* bodyDef);
+    //void setB2Body(b2BodyDef* bodyDef);
     void upload();
     void download();
 private slots:
@@ -26,8 +26,7 @@ private slots:
 
 private:
     Ui::FormRigidBody *ui;
-    b2BodyDef* def;
-    NBBody* def2;
+    NBBody* def;
 };
 
 #endif // FORMRIGIDBODY_H

@@ -9,7 +9,10 @@ class UIJointPrismatic : public FormJoint
     Q_OBJECT
 public:
     explicit UIJointPrismatic(QWidget *parent = 0);
-
+    void attchJoint(NBJoint* joint);
+    void upload();
+    void download();
+    void on_accepted();
 signals:
 
 public slots:

@@ -7,13 +7,6 @@ NBJointPrismatic::NBJointPrismatic()
     this->id = "";
     anchor = b2Vec2(0,0);
     axis = b2Vec2(0,0);
-//    enableLimit = false;
-//    enableMotor = false;
-//    lowerTranslation = 0.0f;
-//    maxMotorForce = 0.0f;
-//    motorSpeed = 0.0f;
-//    referenceAngle = 0.0f;
-//    upperTranslation = 0.0f;
 }
 
 NBJointPrismatic::NBJointPrismatic(string id)
@@ -23,13 +16,6 @@ NBJointPrismatic::NBJointPrismatic(string id)
     this->id = id;
     anchor = b2Vec2(0,0);
     axis = b2Vec2(0,0);
-//    enableLimit = false;
-//    enableMotor = false;
-//    lowerTranslation = 0.0f;
-//    maxMotorForce = 0.0f;
-//    motorSpeed = 0.0f;
-//    referenceAngle = 0.0f;
-//    upperTranslation = 0.0f;
 }
 
 string NBJointPrismatic::getJointType()
@@ -45,7 +31,10 @@ b2JointDef *NBJointPrismatic::getInitDef(B2Unit *unit)
         cout<<__FUNCTION__<<__LINE__<<":"<<idA<<","<<idB<<endl;
         return nullptr;
     }
-    def.Initialize(A,B,anchor,axis);
+    b2Vec2 difAxis = axis-anchor;
+    difAxis.Normalize();
+    def.Initialize(A,B,anchor,difAxis);
+    qDebug()<<__FUNCTION__<<__LINE__<<anchor.x<<anchor.y<<axis.x<<axis.y;
     def.collideConnected = this->collideConnected;
     return &def;
 }

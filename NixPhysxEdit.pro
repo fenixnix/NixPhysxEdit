@@ -41,7 +41,6 @@ SOURCES += main.cpp\
     formfilter.cpp \
     dialogshapecircleedit.cpp \
     formvec2dedit.cpp \
-    formfloatvalue.cpp \
     obj/nbbody.cpp \
     obj/nbdatamnger.cpp \
     obj/nbfixture.cpp \
@@ -65,7 +64,10 @@ SOURCES += main.cpp\
     obj/nbjointprismatic.cpp \
     formjoint.cpp \
     formjointprismaticatt.cpp \
-    AttributeUI/uijointprismatic.cpp
+    AttributeUI/uijointprismatic.cpp \
+    labeledspinbox.cpp \
+    formvector2d.cpp \
+    nbqgeditjointprismatic.cpp
 
 HEADERS  += mainwindow.h \
     ../_src/b2physx.h \
@@ -96,7 +98,6 @@ HEADERS  += mainwindow.h \
     formfilter.h \
     dialogshapecircleedit.h \
     formvec2dedit.h \
-    formfloatvalue.h \
     obj/nbbody.h \
     obj/nbdatamnger.h \
     obj/nbfixture.h \
@@ -120,7 +121,10 @@ HEADERS  += mainwindow.h \
     obj/nbjointprismatic.h \
     formjoint.h \
     formjointprismaticatt.h \
-    AttributeUI/uijointprismatic.h
+    AttributeUI/uijointprismatic.h \
+    labeledspinbox.h \
+    formvector2d.h \
+    nbqgeditjointprismatic.h
 
 FORMS    += mainwindow.ui \
     formrigidbody.ui \
@@ -135,10 +139,11 @@ FORMS    += mainwindow.ui \
     formfilter.ui \
     dialogshapecircleedit.ui \
     formvec2dedit.ui \
-    formfloatvalue.ui \
     dialogshapepolygonedit.ui \
     formjoint.ui \
-    formjointprismaticatt.ui
+    formjointprismaticatt.ui \
+    labeledspinbox.ui \
+    formvector2d.ui
 
 INCLUDEPATH += ../_src/
 include(D:/workspace/include/Box2D.pri)
