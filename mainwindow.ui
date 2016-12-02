@@ -40,24 +40,6 @@
        </widget>
       </item>
       <item>
-       <widget class="QTreeWidget" name="treeWidget_Layer">
-        <property name="maximumSize">
-         <size>
-          <width>100</width>
-          <height>16777215</height>
-         </size>
-        </property>
-        <attribute name="headerVisible">
-         <bool>false</bool>
-        </attribute>
-        <column>
-         <property name="text">
-          <string notr="true">1</string>
-         </property>
-        </column>
-       </widget>
-      </item>
-      <item>
        <widget class="QTabWidget" name="tabWidget_2">
         <property name="maximumSize">
          <size>
@@ -228,12 +210,13 @@
      <string>World</string>
     </property>
     <addaction name="actionGravity"/>
-    <addaction name="actionWorld_Box"/>
+    <addaction name="actionGenerate_Ground"/>
+    <addaction name="actionGenerate_Box"/>
     <addaction name="separator"/>
+    <addaction name="actionCreate_Unit"/>
     <addaction name="actionRun"/>
     <addaction name="actionPause"/>
     <addaction name="actionStop"/>
-    <addaction name="actionCreate_Unit"/>
    </widget>
    <widget class="QMenu" name="menuJoint">
     <property name="title">
@@ -314,11 +297,6 @@
   <action name="actionGravity">
    <property name="text">
     <string>Gravity</string>
-   </property>
-  </action>
-  <action name="actionWorld_Box">
-   <property name="text">
-    <string>World Box</string>
    </property>
   </action>
   <action name="actionRun">
@@ -530,13 +508,41 @@
    </property>
   </action>
   <action name="actionSquare_Object">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Square Object</string>
    </property>
   </action>
   <action name="actionTrangle_Object">
+   <property name="enabled">
+    <bool>false</bool>
+   </property>
    <property name="text">
     <string>Trangle Object</string>
+   </property>
+  </action>
+  <action name="actionGenerate_Ground">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Generate Ground</string>
+   </property>
+  </action>
+  <action name="actionGenerate_Box">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="checked">
+    <bool>false</bool>
+   </property>
+   <property name="text">
+    <string>Generate Box</string>
    </property>
   </action>
  </widget>

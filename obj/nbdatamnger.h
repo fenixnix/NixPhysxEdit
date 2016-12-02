@@ -35,6 +35,7 @@ public:
     int createShape(XMLElement* elm);
     int delShape(QString id);
     b2Shape *getShape(QString id);
+    b2Shape *getShapeClone(QString id);
     QStringList getShapeList();
 
     void draw(NQOpenGL2DWidget* widget);
@@ -46,6 +47,7 @@ private:
     QMap<QString,b2BodyDef*> bodyDefs;
     QMap<QString,b2FixtureDef*> fixtureDefs;
     QMap<QString,b2JointDef*> jointDefs;
+    b2BlockAllocator blockAllocator;
 };
 
 #endif // NBDATAMNGER_H

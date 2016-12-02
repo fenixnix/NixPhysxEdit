@@ -18,7 +18,6 @@ NBBody::~NBBody()
 
 NBBody::NBBody(QString id)
 {
-    this->id = "";
     def.type = b2_dynamicBody;
     def.linearDamping = 0.1f;
     def.angularDamping = 0.1f;

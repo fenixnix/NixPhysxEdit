@@ -27,6 +27,7 @@ public:
 public slots:
   void step();
   void setWorldBox(float w, float h);
+  void setWorldGround(float w, float h);
   void changeCurrentWidget(QWidget* widget);
   void editShape(b2Shape *s);
 
@@ -39,13 +40,17 @@ public slots:
   void updateAtt(NBObject* obj);
   void refreshAtt();
 
-  void addNewJoint(QString jointType);
+  NBBody *addNewBody(QString id);
+  NBFixture *addNewFixture(QString id, QString shapeID);
+  void addNewJoint(QString id, QString jointType);
+  void inputIDtoAddNewJoint(QString jointType);
+
+  QString autoName(QString baseName,QStringList existNameList);
 
 private slots:
   void on_actionAdd_triggered();
   void on_actionWorld_Box_triggered();
   void on_actionRun_triggered();
-  void expendB2Fixture(QString rid,QString fid);
   void on_listWidget_RigidBodys_clicked(const QModelIndex &index);
   void on_actionGravity_triggered();
   void on_actionStop_triggered();
@@ -67,12 +72,13 @@ private slots:
   void on_actionCreate_Unit_triggered();
   void on_actionExport_Unit_triggered();
   void on_actionImport_Unit_triggered();
-  void on_treeWidget_Layer_clicked(const QModelIndex &index);
   void on_listWidget_Fixtures_clicked(const QModelIndex &index);
   void on_listWidget_Joint_customContextMenuRequested(const QPoint &pos);
   void on_listWidget_Shape_customContextMenuRequested(const QPoint &pos);
 
   void on_actionTest_read_triggered();
+
+  void on_actionCircle_Object_triggered();
 
 private:
   Ui::MainWindow *ui;
@@ -81,7 +87,6 @@ private:
   Box2DQtDraw draw;
   QTimer simTimer;
 
-  b2BlockAllocator allo;
   QWidget* curWidget;
   QWidget* nullWidget;
   FormRigidBody formBody;

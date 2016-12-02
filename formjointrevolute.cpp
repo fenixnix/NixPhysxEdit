@@ -54,6 +54,7 @@ void FormJointRevolute::download()
         qDebug()<<__FUNCTION__<<__LINE__;
         return;
     }
+
     joint->idA = ui->BodyA->currentText().toStdString();
     joint->idB = ui->BodyB->currentText().toStdString();
     joint->anchor.x = ui->anchorX->value();
@@ -68,7 +69,7 @@ void FormJointRevolute::download()
     joint->motorSpeed = ui->motorSpeed->value();
 }
 
-void FormJointRevolute::on_pushButton_OK_clicked()
+void FormJointRevolute::on_buttonBox_accepted()
 {
     download();
 }

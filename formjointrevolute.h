@@ -20,7 +20,7 @@ public:
     void download();
 
 private slots:
-    void on_pushButton_OK_clicked();
+    void on_buttonBox_accepted();
 
 private:
     Ui::FormJointRevolute *ui;

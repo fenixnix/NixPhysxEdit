@@ -271,6 +271,15 @@ b2Shape *NBDataMnger::getShape(QString id)
     return nullptr;
 }
 
+b2Shape *NBDataMnger::getShapeClone(QString id)
+{
+    b2Shape* shape = getShape(id);
+    if(shape == nullptr){
+        return shape;
+    }
+    return shape->Clone(&blockAllocator);
+}
+
 QStringList NBDataMnger::getShapeList()
 {
     return shapes.keys();
