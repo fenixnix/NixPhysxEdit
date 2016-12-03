@@ -129,8 +129,11 @@ void MainWindow::updateAtt(NBObject *obj)
 {
     QString type = obj->getType();
     if(type == "body"){
+        qDebug()<<__FUNCTION__<<__LINE__;
         formBody.setBody(obj->toBody());
+        qDebug()<<__FUNCTION__<<__LINE__;
         changeCurrentWidget(&formBody);
+        qDebug()<<__FUNCTION__<<__LINE__;
     }
     if(type == "joint"){
         NBJoint* joint = obj->toJoint();
@@ -181,17 +184,18 @@ NBBody* MainWindow::addNewBody(QString id)
 
 NBFixture *MainWindow::addNewFixture(QString id, QString shapeID)
 {
-    NBObject* obj = NBDataMnger::the()->layer.getNBBody(currentRID);
-    if(obj==nullptr){
+    NBBody* body = getCurrentBody();
+    if(body == nullptr){
         qDebug()<<__FUNCTION__<<__LINE__;
         return nullptr;
     }
+
     b2Shape* shapePtr = NBDataMnger::the()->getShapeClone(shapeID);
     if(shapePtr==nullptr){
         qDebug()<<__FUNCTION__<<__LINE__;
         return nullptr;
     }
-    NBBody* body = obj->toBody();
+
     NBFixture* fixture = new NBFixture(body,id);
     fixture->def.shape = shapePtr;
     NBDataMnger::the()->layer.addFixture(fixture);
@@ -213,7 +217,17 @@ void MainWindow::inputIDtoAddNewJoint(QString jointType)
     addNewJoint(id,jointType);
 }
 
-QString MainWindow::autoName(QString baseName, QStringList existNameList)
+NBBody *MainWindow::getCurrentBody()
+{
+    NBObject* obj = NBDataMnger::the()->layer.getNBBody(currentRID);
+    if(obj==nullptr){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return nullptr;
+    }
+    return obj->toBody();
+}
+
+QString MainWindow::genAutoName(QString baseName, QStringList existNameList)
 {
     QString genAutoName = baseName;
     int autoNum = 0;
@@ -254,10 +268,17 @@ void MainWindow::on_actionRun_triggered()
 void MainWindow::on_listWidget_RigidBodys_clicked(const QModelIndex &index)
 {
     currentRID = index.data().toString();
-    updateFixtureList(currentRID);
-    NBBody* body = NBDataMnger::the()->layer.getNBBody(currentRID)->toBody();
+    qDebug()<<__FUNCTION__<<__LINE__;
+    NBBody* body = getCurrentBody();
+    if(body == nullptr){
+        qDebug()<<__FUNCTION__<<__LINE__<<"!!!";
+        return;
+    }
+    qDebug()<<__FUNCTION__<<__LINE__;
     updateAtt(body);
+    qDebug()<<__FUNCTION__<<__LINE__;
     ui->openGLWidget->setEditNBObject(body);
+    qDebug()<<__FUNCTION__<<__LINE__;
 }
 
 void MainWindow::on_actionGravity_triggered()
@@ -285,7 +306,15 @@ void MainWindow::on_actionCircle_triggered()
 void MainWindow::on_actionPolygon_triggered()
 {
     DialogShapePolygonEdit edit;
-    edit.exec();
+    b2PolygonShape *shape = new b2PolygonShape;
+    shape->SetAsBox(1,1);
+    edit.set(shape);
+    if(edit.exec()){
+        QString newShapeID = QInputDialog::getText(this,"Polygon","ID");
+        NBDataMnger::the()->createShape(newShapeID,shape);
+        return;
+    }
+    delete shape;
 }
 
 void MainWindow::on_actionChain_triggered()
@@ -318,33 +347,15 @@ void MainWindow::on_actionNew_triggered()
 {
     QStringList shapeList = NBDataMnger::the()->getShapeList();
     QString shapeID = QInputDialog::getItem(this,"Shape List","Shape",shapeList,0,false);
-    QString id = QInputDialog::getText(this,"Fixture","ID",QLineEdit::Normal,"shape");
-    addNewFixture(id,shapeID);
-}
-
-void MainWindow::on_listWidget_RigidBodys_customContextMenuRequested(const QPoint &pos)
-{
-    QListWidgetItem* item = ui->listWidget_RigidBodys->itemAt(pos);
-    if(item->isSelected()){
-        QMenu* popMenu = new QMenu(this);
-        popMenu->addAction(tr("Add Fixture"));
-        popMenu->addAction(tr("delete"));
-        QAction* action = popMenu->exec(QCursor::pos());
-        if(action == nullptr){
-            qDebug()<<__FUNCTION__<<__LINE__;
-            return;
-        }
-        qDebug()<<__FUNCTION__<<__LINE__<< action->text();
-        if(action->text() == "Add Fixture"){
-            on_actionNew_triggered();
-            updateBodyList();
-        }
-        if(action->text() == "delete"){
-            NBDataMnger::the()->layer.delBody(item->text());
-            updateBodyList();
-        }
+    QStringList currentBodyFixtureList = getCurrentBody()->getFixtureList();
+    QString autoName = genAutoName("shape",currentBodyFixtureList);
+    QString id = QInputDialog::getText(this,"Fixture","ID",QLineEdit::Normal,autoName);
+    if(currentBodyFixtureList.contains(id)){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        QMessageBox::warning(this,"Waring!!!","exist shape name!!!");
         return;
     }
+    addNewFixture(id,shapeID);
 }
 
 void MainWindow::on_actionSave_triggered()
@@ -412,7 +423,7 @@ void MainWindow::on_actionGear_triggered()
 void MainWindow::on_listWidget_Joint_clicked(const QModelIndex &index)
 {
     QString jointID = index.data().toString();
-    NBJoint* obj =(NBJointDistance*)(NBDataMnger::the()->layer.getNBJoint(jointID.toStdString()));
+    NBJoint* obj = (NBDataMnger::the()->layer.getNBJoint(jointID.toStdString()))->toJoint();
     if(obj==nullptr){
         return;
     }
@@ -441,14 +452,39 @@ void MainWindow::on_actionImport_Unit_triggered()
 
 void MainWindow::on_listWidget_Fixtures_clicked(const QModelIndex &index)
 {
-    currentFID = ui->listWidget_Fixtures->currentItem()->text();
-    NBFixture* obj = NBDataMnger::the()->layer.getNBFixture(currentRID,currentFID)->toFixture();
+    QString fixtureID = ui->listWidget_Fixtures->currentItem()->text();
+    NBFixture* obj = NBDataMnger::the()->layer.getNBFixture(currentRID,fixtureID)->toFixture();
     if(!obj){
         return;
     }
     updateFixtureList(currentRID);
     updateAtt(obj);
     ui->openGLWidget->setEditNBObject(obj);
+}
+
+void MainWindow::on_listWidget_RigidBodys_customContextMenuRequested(const QPoint &pos)
+{
+    QListWidgetItem* item = ui->listWidget_RigidBodys->itemAt(pos);
+    if(item->isSelected()){
+        QMenu* popMenu = new QMenu(this);
+        popMenu->addAction(tr("Add Fixture"));
+        popMenu->addAction(tr("delete"));
+        QAction* action = popMenu->exec(QCursor::pos());
+        if(action == nullptr){
+            qDebug()<<__FUNCTION__<<__LINE__;
+            return;
+        }
+        qDebug()<<__FUNCTION__<<__LINE__<< action->text();
+        if(action->text() == "Add Fixture"){
+            on_actionNew_triggered();
+            updateBodyList();
+        }
+        if(action->text() == "delete"){
+            NBDataMnger::the()->layer.delBody(item->text());
+            updateBodyList();
+        }
+        return;
+    }
 }
 
 void MainWindow::on_listWidget_Joint_customContextMenuRequested(const QPoint &pos)
@@ -493,6 +529,26 @@ void MainWindow::on_listWidget_Shape_customContextMenuRequested(const QPoint &po
     }
 }
 
+void MainWindow::on_listWidget_Fixtures_customContextMenuRequested(const QPoint &pos)
+{
+    QListWidgetItem* item = ui->listWidget_Fixtures->itemAt(pos);
+    if(item){
+        QMenu* popMenu = new QMenu(this);
+        popMenu->addAction("delete");
+        QAction* action = popMenu->exec(QCursor::pos());
+        if(action == nullptr){
+            qDebug()<<__FUNCTION__<<__LINE__;
+            return;
+        }
+        if(action->text() == "delete"){
+            qDebug()<<__FUNCTION__<<__LINE__<<item->text();
+            getCurrentBody()->delFixture(item->text());
+            //currentFID = "";
+            updateFixtureList(currentRID);
+        }
+    }
+}
+
 void MainWindow::on_actionTest_read_triggered()
 {
     ///test code
@@ -504,8 +560,16 @@ void MainWindow::on_actionTest_read_triggered()
 
 void MainWindow::on_actionCircle_Object_triggered()
 {
-    QString bodyID = autoName("body",NBDataMnger::the()->layer.getBodyList());
+    QString bodyID = genAutoName("body",NBDataMnger::the()->layer.getBodyList());
     NBBody* body = addNewBody(bodyID);
-    QString fixtureID = autoName("shape",body->getFixtureList());
+    QString fixtureID = genAutoName("shape",body->getFixtureList());
     addNewFixture(fixtureID,"Circle");
+}
+
+void MainWindow::on_actionSquare_Object_triggered()
+{
+    QString bodyID = genAutoName("body",NBDataMnger::the()->layer.getBodyList());
+    NBBody* body = addNewBody(bodyID);
+    QString fixtureID = genAutoName("shape",body->getFixtureList());
+    addNewFixture(fixtureID,"Quad");
 }

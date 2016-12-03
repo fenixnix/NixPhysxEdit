@@ -68,7 +68,11 @@ void NBLayer::read(QString fileName)
 {
     using namespace tinyxml2;
     tinyxml2::XMLDocument dom;
-    dom.LoadFile(fileName.toStdString().c_str());
+    XMLError err = dom.LoadFile(fileName.toStdString().c_str());
+    if(err){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return;
+    }
     XMLNode* root = dom.RootElement();
     XMLNode* n = root->FirstChild();
     while(n){

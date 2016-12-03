@@ -23,6 +23,12 @@ NBFixture::NBFixture(NBObject *p, QString id)
 NBFixture::~NBFixture()
 {
     clear();
+    parent = nullptr;
+    if(def.shape!=nullptr){
+        qDebug()<<__FUNCTION__<<__LINE__<<"empty";
+        //delete def.shape;
+        def.shape = nullptr;
+    }
 }
 
 void NBFixture::clear()

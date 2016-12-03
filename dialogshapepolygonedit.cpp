@@ -15,11 +15,30 @@ DialogShapePolygonEdit::~DialogShapePolygonEdit()
 
 void DialogShapePolygonEdit::set(b2Shape *s)
 {
-    shape = (b2PolygonShape*)s;
-    ui->openGLWidget->set(shape);
+    getWidget()->set((b2PolygonShape*)s);
 }
 
 void DialogShapePolygonEdit::widgetValueChanged()
 {
 
+}
+
+void DialogShapePolygonEdit::on_buttonBox_accepted()
+{
+
+}
+
+void DialogShapePolygonEdit::on_pushButton_add_clicked()
+{
+    getWidget()->addPoint();
+}
+
+void DialogShapePolygonEdit::on_pushButton_delete_clicked()
+{
+    getWidget()->delPoint();
+}
+
+NBShapePolygonGLWidget *DialogShapePolygonEdit::getWidget()
+{
+    return ui->openGLWidget;
 }

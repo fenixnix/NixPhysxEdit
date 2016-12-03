@@ -19,6 +19,7 @@ public:
     b2BodyDef def;
     //int addFixture(QString fid,b2FixtureDef* fixture);
     int addFixture(NBFixture* fixture);
+    int delFixture(QString id);
     b2FixtureDef *getFixtureDef(QString id);
     NBFixture *getFixture(QString id);
     QStringList getFixtureList();

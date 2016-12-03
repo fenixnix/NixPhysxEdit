@@ -121,3 +121,8 @@ void NBShapePolygonGLWidget::set(b2Shape *s)
     shape = (b2PolygonShape*)s;
     upload();
 }
+
+b2Shape *NBShapePolygonGLWidget::get()
+{
+    return shape;
+}

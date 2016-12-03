@@ -141,6 +141,18 @@ int NBBody::addFixture(NBFixture *fixture)
     return 0;
 }
 
+int NBBody::delFixture(QString id)
+{
+    NBFixture *fixture = getFixture(id);
+    if(fixture == nullptr){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        return __LINE__;
+    }
+    delete fixture;
+    fixtures.erase(fixtures.find(id));
+    return 0;
+}
+
 b2FixtureDef *NBBody::getFixtureDef(QString id)
 {
     if(fixtures.contains(id)){
@@ -151,9 +163,7 @@ b2FixtureDef *NBBody::getFixtureDef(QString id)
 
 NBFixture *NBBody::getFixture(QString id)
 {
-    qDebug()<<__FUNCTION__<<__LINE__;
     if(fixtures.contains(id)){
-        qDebug()<<__FUNCTION__<<__LINE__;
         return fixtures[id];
     }
     qDebug()<<__FUNCTION__<<__LINE__;

@@ -25,6 +25,7 @@ public:
     float centerY;
 public slots:
     void set(b2Shape* s);
+    b2Shape *get();
 signals:
     void valueChange();
 private:
