@@ -10,9 +10,9 @@ NBJoint::NBJoint()
     id = "";
 }
 
-QString NBJoint::getType()
+NBObject::NBObjectType NBJoint::getType()
 {
-    return "joint";
+    return NBObject::type_joint;
 }
 
 b2JointDef *NBJoint::getInitDef(B2Unit *unit)
@@ -40,7 +40,7 @@ void NBJoint::writeJointCommonInfo(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode
 {
     using namespace tinyxml2;
     root->ToElement()->SetAttribute("id",id.c_str());
-    root->ToElement()->SetAttribute("type",getJointType().c_str());
+    root->ToElement()->SetAttribute("type",getJointType());
     //cout<<__FUNCTION__<<":"<<getJointType()<<endl;
 
     XMLElement* bodyA = root->LinkEndChild(dom->NewElement("idA"))->ToElement();
@@ -77,7 +77,7 @@ NBJointPrismatic *NBJoint::toJointPrismatic()
     return (NBJointPrismatic*)this;
 }
 
-string NBJoint::getJointType()
+b2JointType NBJoint::getJointType()
 {
-    return "unknowJointType";
+    return e_unknownJoint;
 }

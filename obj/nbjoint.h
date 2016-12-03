@@ -12,8 +12,8 @@ class NBJoint : public NBObject
 {
 public:
     NBJoint();
-    QString getType();
-    virtual string getJointType();
+    NBObjectType getType();
+    virtual b2JointType getJointType();
     virtual b2JointDef *getInitDef(B2Unit* unit) = 0;
     static NBJoint* create(tinyxml2::XMLNode* node);
 

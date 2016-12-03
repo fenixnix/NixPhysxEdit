@@ -18,9 +18,9 @@ NBJointPrismatic::NBJointPrismatic(string id)
     axis = b2Vec2(0,0);
 }
 
-string NBJointPrismatic::getJointType()
+b2JointType NBJointPrismatic::getJointType()
 {
-    return "prismatic";
+    return e_prismaticJoint;
 }
 
 b2JointDef *NBJointPrismatic::getInitDef(B2Unit *unit)

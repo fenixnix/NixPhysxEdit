@@ -10,7 +10,7 @@ public:
     NBFixture(NBObject *parent, QString id);
     ~NBFixture();
     void clear();
-    QString getType();
+    NBObjectType getType();
     void write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent);
     NBObject *read(tinyxml2::XMLNode *node);
     b2Vec2 getWorldFromLoc(b2Vec2 vec);

@@ -36,9 +36,9 @@ void NBFixture::clear()
     qDebug()<<__FUNCTION__<<__LINE__<<"empty";
 }
 
-QString NBFixture::getType()
+NBObject::NBObjectType NBFixture::getType()
 {
-    return "fixture";
+    return NBObject::type_fixture;
 }
 
 void NBFixture::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent)

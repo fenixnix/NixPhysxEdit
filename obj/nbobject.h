@@ -22,8 +22,9 @@ class NBJoint;
 class NBObject
 {
 public:
+    enum NBObjectType{type_body = 0,type_fixture,type_joint,type_unknow};
     NBObject();
-    virtual QString getType();
+    virtual NBObjectType getType();
     virtual void write(tinyxml2::XMLDocument* dom,tinyxml2::XMLNode* parent);
     virtual NBObject *read(tinyxml2::XMLNode* node);
 

@@ -51,6 +51,7 @@ private:
     QPointF camProPos;
     QColor bgColor;
     bool viewMov;
+    void updateViewPort();
 };
 
 #endif // NQOPENGL2DWIDGET_H

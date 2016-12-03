@@ -8,9 +8,9 @@ NBObject::NBObject()
 
 }
 
-QString NBObject::getType()
+NBObject::NBObjectType NBObject::getType()
 {
-    return "unknow";
+    return type_unknow;
 }
 
 void NBObject::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent)

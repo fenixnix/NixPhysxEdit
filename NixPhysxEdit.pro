@@ -149,8 +149,8 @@ INCLUDEPATH += ../_src/
 include(D:/workspace/include/Box2D.pri)
 include(d:/workspace/include/tinyxml2.pri)
 
-LIBS += \
--lglu32\
+#LIBS += \
+#-lglu32\
 
 DISTFILES += \
     box2dTestUI.txt \

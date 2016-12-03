@@ -11,7 +11,7 @@ public:
     ~NBBody();
     void clear();
     NBBody(QString id);
-    QString getType();
+    NBObjectType getType();
     void write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent);
     NBObject* read(tinyxml2::XMLNode *node);
 

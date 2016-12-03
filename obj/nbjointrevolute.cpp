@@ -30,9 +30,9 @@ NBJointRevolute::NBJointRevolute(string id)
     this->id = id;
 }
 
-string NBJointRevolute::getJointType()
+b2JointType NBJointRevolute::getJointType()
 {
-    return "revolute";
+    return e_revoluteJoint;
 }
 
 void NBJointRevolute::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent)

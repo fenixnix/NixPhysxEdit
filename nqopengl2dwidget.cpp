@@ -2,12 +2,29 @@
 #define _USE_MATH_DEFINES
 #include "math.h"
 
+const float viewZNear = 1.0f;
+const float viewZFar = -1.0f;
+
 NQOpenGL2DWidget::NQOpenGL2DWidget(QWidget *parent):QOpenGLWidget(parent)
 {
     bgColor = Qt::black;
     viewMov = false;
     camPos.setZ(10);
     this->setMouseTracking(true);
+}
+
+void NQOpenGL2DWidget::updateViewPort()
+{
+    glLoadIdentity();
+    float ratio = (float)this->height()/(float)this->width();
+    float whalf = camPos.z();
+    float hhalf = camPos.z()*ratio;
+    glOrtho(camPos.x() - whalf,
+            camPos.x() + whalf,
+            camPos.y() - hhalf,
+            camPos.y() + hhalf,
+            viewZNear,viewZFar);
+    glViewport(0,0,this->width(),this->height());
 }
 
 void NQOpenGL2DWidget::initializeGL()
@@ -17,29 +34,13 @@ void NQOpenGL2DWidget::initializeGL()
     glBlendFunc(GL_SRC_ALPHA,GL_ONE_MINUS_SRC_ALPHA);
     glClearColor(bgColor.redF(),bgColor.greenF(),bgColor.blueF(),bgColor.alphaF());
     glMatrixMode(GL_PROJECTION);
-    glLoadIdentity();
-    float ratio = (float)this->height()/(float)this->width();
-    float whalf = camPos.z();
-    float hhalf = camPos.z()*ratio;
-    gluOrtho2D(camPos.x() - whalf,
-               camPos.x() + whalf,
-               camPos.y() - hhalf,
-               camPos.y() + hhalf);
-    glViewport(0,0,this->width(),this->height());
+    updateViewPort();
 }
 
 void NQOpenGL2DWidget::paintGL()
 {
     glClear(GL_COLOR_BUFFER_BIT);
-    glLoadIdentity();
-    float ratio = (float)this->height()/(float)this->width();
-    float whalf = camPos.z();
-    float hhalf = camPos.z()*ratio;
-    gluOrtho2D(camPos.x() - whalf,
-               camPos.x() + whalf,
-               camPos.y() - hhalf,
-               camPos.y() + hhalf);
-    glViewport(0,0,this->width(),this->height());
+    updateViewPort();
     drawGroundGrid();
     draw(this);
     glFlush();

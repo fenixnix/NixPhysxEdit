@@ -8,7 +8,7 @@ class NBJointPrismatic : public NBJoint
 public:
     NBJointPrismatic();
     NBJointPrismatic(string id);
-    string getJointType();
+    b2JointType getJointType();
     //获取内部初始化JointDef实例指针
     b2JointDef *getInitDef(B2Unit* unit);
 

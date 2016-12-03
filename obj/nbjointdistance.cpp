@@ -82,7 +82,7 @@ b2JointDef *NBJointDistance::getInitDef(B2Unit* unit)
     return &def;
 }
 
-string NBJointDistance::getJointType()
+b2JointType NBJointDistance::getJointType()
 {
-    return "distance";
+    return e_distanceJoint;
 }

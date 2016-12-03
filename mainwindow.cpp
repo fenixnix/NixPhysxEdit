@@ -128,31 +128,26 @@ void MainWindow::updateAllList()
 void MainWindow::updateAtt(NBObject *obj)
 {
     QString type = obj->getType();
-    if(type == "body"){
-        qDebug()<<__FUNCTION__<<__LINE__;
+    if(obj->getType() == NBObject::type_body){
         formBody.setBody(obj->toBody());
-        qDebug()<<__FUNCTION__<<__LINE__;
         changeCurrentWidget(&formBody);
-        qDebug()<<__FUNCTION__<<__LINE__;
     }
-    if(type == "joint"){
+    if(obj->getType() == NBObject::type_joint){
         NBJoint* joint = obj->toJoint();
-        QString jointType = QString::fromStdString(joint->getJointType());
-        if(jointType == "distance"){
+        if(joint->getJointType() == e_distanceJoint){
             formJointDistance.setJoint(joint->toJointDistance());
             changeCurrentWidget(&formJointDistance);
         }
-        if(jointType == "revolute"){
+        if(joint->getJointType() == e_revoluteJoint){
             formJointRevolute.setJoint(joint->toJointRevolute());
             changeCurrentWidget(&formJointRevolute);
         }
-        if(jointType == "prismatic"){
+        if(joint->getJointType() == e_prismaticJoint){
             uiJointPrismatic.attchJoint(joint);
             changeCurrentWidget(&uiJointPrismatic);
         }
-        qDebug()<<__FUNCTION__<<__LINE__<<jointType<<"!!!";
     }
-    if(type == "fixture"){
+    if(obj->getType() == NBObject::type_fixture){
         formFixture.setFixture(obj->toFixture());
         changeCurrentWidget(&formFixture);
     }
@@ -268,17 +263,14 @@ void MainWindow::on_actionRun_triggered()
 void MainWindow::on_listWidget_RigidBodys_clicked(const QModelIndex &index)
 {
     currentRID = index.data().toString();
-    qDebug()<<__FUNCTION__<<__LINE__;
     NBBody* body = getCurrentBody();
     if(body == nullptr){
         qDebug()<<__FUNCTION__<<__LINE__<<"!!!";
         return;
     }
-    qDebug()<<__FUNCTION__<<__LINE__;
     updateAtt(body);
-    qDebug()<<__FUNCTION__<<__LINE__;
+    updateFixtureList(currentRID);
     ui->openGLWidget->setEditNBObject(body);
-    qDebug()<<__FUNCTION__<<__LINE__;
 }
 
 void MainWindow::on_actionGravity_triggered()

@@ -19,10 +19,10 @@ NBQGEdit *NBQGEdit::create(NBObject *o, NQOpenGL2DWidget *widget)
 {
     NBQGEdit* editor = nullptr;
     qDebug()<<__FUNCTION__<<o->getType();
-    if(o->getType() == "body"){
+    if(o->getType() == NBObject::type_body){
         editor = new NBQGEditRigidBody;
     }
-    if(o->getType() == "fixture"){
+    if(o->getType() == NBObject::type_fixture){
         b2Shape::Type shapeType = o->toFixture()->def.shape->GetType();
         switch(shapeType){
         case b2Shape::e_circle:editor = new NBQGEditShapeCircle(o);break;
@@ -30,18 +30,18 @@ NBQGEdit *NBQGEdit::create(NBObject *o, NQOpenGL2DWidget *widget)
         default: break;
         }
     }
-    if(o->getType() == "joint"){
+    if(o->getType() == NBObject::type_joint){
         NBJoint* j = o->toJoint();
         //qDebug()<<__FUNCTION__<<__LINE__;
-        if(j->getJointType() == "distance"){
+        if(j->getJointType() == e_distanceJoint){
             //qDebug()<<__FUNCTION__<<__LINE__;
             editor = new NBQGEditJointDistance;
         }
-        if(j->getJointType() == "revolute"){
+        if(j->getJointType() == e_revoluteJoint){
             //qDebug()<<__FUNCTION__<<__LINE__;
             editor = new NBQGEditJointRevolute;
         }
-        if(j->getJointType() == "prismatic"){
+        if(j->getJointType() == e_prismaticJoint){
             //qDebug()<<__FUNCTION__<<__LINE__;
             editor = new NBQGEditJointPrismatic;
         }

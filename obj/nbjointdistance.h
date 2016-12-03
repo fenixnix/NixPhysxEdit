@@ -8,7 +8,7 @@ class NBJointDistance : public NBJoint
 public:
     NBJointDistance();
     NBJointDistance(string id);
-    string getJointType();
+    b2JointType getJointType();
 
     //write to para to dom parent node
     void write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent);

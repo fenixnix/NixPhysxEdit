@@ -81,19 +81,26 @@ void Box2DQtDraw::drawBody(NQOpenGL2DWidget *gl, b2BodyDef *body)
 
 #include "obj/nbjointdistance.h"
 #include "obj/nbjointrevolute.h"
+#include "obj/nbjointprismatic.h"
 void Box2DQtDraw::drawJoint(NQOpenGL2DWidget *gl, NBJoint *joint)
 {
     gl->glColor4f(0.5,0,0,0.5);
     float size = gl->getWorldPixelSize();
-    if(joint->getJointType() == "distance"){
+    if(joint->getJointType() == e_distanceJoint){
         NBJointDistance* j = joint->toJointDistance();
         gl->drawCircle(j->anchorA.x,j->anchorA.y,size,GL_LINE_LOOP);
         gl->drawRect(j->anchorB.x,j->anchorB.y,size,size);
         gl->drawLine(j->anchorA.x,j->anchorA.y,j->anchorB.x,j->anchorB.y);
     }
-    if(joint->getJointType() == "revolute"){
+    if(joint->getJointType() == e_revoluteJoint){
         NBJointRevolute* j = joint->toJointRevolute();
         gl->drawCircle(j->anchor.x,j->anchor.y,size,GL_LINE_LOOP);
+    }
+    if(joint->getJointType() == e_prismaticJoint){
+        NBJointPrismatic* j = joint->toJointPrismatic();
+        gl->drawCircle(j->anchor.x,j->anchor.y,size,GL_LINE_LOOP);
+        gl->drawRect(j->axis.x,j->axis.y,size,size);
+        gl->drawLine(j->anchor.x,j->anchor.y,j->axis.x,j->axis.y);
     }
 }
 

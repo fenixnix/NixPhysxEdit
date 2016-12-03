@@ -24,9 +24,9 @@ NBBody::NBBody(QString id)
     this->id = id;
 }
 
-QString NBBody::getType()
+NBObject::NBObjectType NBBody::getType()
 {
-    return "body";
+    return NBObject::type_body;
 }
 
 void NBBody::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *parent)
