@@ -28,15 +28,6 @@ void NBJointDistance::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *paren
     XMLElement* root = parent->LinkEndChild(dom->NewElement("Joint"))->ToElement();
     writeJointCommonInfo(dom,root);
 
-//    root->SetAttribute("id",id.c_str());
-//    root->SetAttribute("type",getJointType().c_str());
-
-//    XMLElement* bodyA = root->LinkEndChild(dom->NewElement("idA"))->ToElement();
-//    bodyA->SetAttribute("value",this->idA.c_str());
-
-//    XMLElement* bodyB = root->LinkEndChild(dom->NewElement("idB"))->ToElement();
-//    bodyB->SetAttribute("value",this->idB.c_str());
-
     XMLElement* anchorA  = root->LinkEndChild(dom->NewElement("anchorA"))->ToElement();
     anchorA->SetAttribute("x",this->anchorA.x);
     anchorA->SetAttribute("y",this->anchorA.y);
@@ -45,7 +36,6 @@ void NBJointDistance::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *paren
     anchorB->SetAttribute("x",this->anchorB.x);
     anchorB->SetAttribute("y",this->anchorB.y);
 
-//    _WRITEPR(collideConnected);
     _WRITEPR(dampingRatio);
     _WRITEPR(frequencyHz);
 }

@@ -17,12 +17,14 @@ public:
     B2Unit* create(b2World* world);
     void write(QString fileName);
     void read(QString fileName);
+    void clear();
 
     int addBody(NBBody* body);
     b2BodyDef* getBody(QString id);
     NBObject *getNBBody(QString id);
     void delBody(QString id);
     QStringList getBodyList();
+    void clearAllBody();
 
     int addFixture(NBFixture* fixture);
     b2FixtureDef *getFixture(QString id, QString fid);
@@ -36,6 +38,7 @@ public:
     NBObject *getNBJoint(string id);
     void delJoint(string);
     QStringList getJointList();
+    void clearAllJoint();
 private:
     QMap<QString,NBBody*> bodys;
     QMap<string,NBJoint*> joints;

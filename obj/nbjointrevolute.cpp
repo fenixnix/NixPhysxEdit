@@ -40,20 +40,11 @@ void NBJointRevolute::write(tinyxml2::XMLDocument *dom, tinyxml2::XMLNode *paren
     using namespace tinyxml2;
     XMLElement* root = parent->LinkEndChild(dom->NewElement("Joint"))->ToElement();
     writeJointCommonInfo(dom,root);
-//    root->SetAttribute("id",id.c_str());
-//    root->SetAttribute("type",getJointType().c_str());
-
-//    XMLElement* bodyA = root->LinkEndChild(dom->NewElement("idA"))->ToElement();
-//    bodyA->SetAttribute("value",this->idA.c_str());
-
-//    XMLElement* bodyB = root->LinkEndChild(dom->NewElement("idB"))->ToElement();
-//    bodyB->SetAttribute("value",this->idB.c_str());
 
     XMLElement* anchorA  = root->LinkEndChild(dom->NewElement("anchor"))->ToElement();
     anchorA->SetAttribute("x",this->anchor.x);
     anchorA->SetAttribute("y",this->anchor.y);
 
-//    _WRITEPR(collideConnected);
     _WRITEPR(referenceAngle);
     _WRITEPR(lowerAngle);
     _WRITEPR(upperAngle);

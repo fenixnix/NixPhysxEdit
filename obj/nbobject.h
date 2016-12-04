@@ -22,7 +22,7 @@ class NBJoint;
 class NBObject
 {
 public:
-    enum NBObjectType{type_body = 0,type_fixture,type_joint,type_unknow};
+    enum NBObjectType{type_unknow = 0, type_body, type_fixture, type_joint};
     NBObject();
     virtual NBObjectType getType();
     virtual void write(tinyxml2::XMLDocument* dom,tinyxml2::XMLNode* parent);

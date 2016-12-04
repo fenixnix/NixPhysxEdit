@@ -81,13 +81,21 @@ void NBLayer::read(QString fileName)
             NBBody* body = new NBBody;
             body->read(elm);
             addBody(body);
+            qDebug()<<__FUNCTION__<<__LINE__;
         }
         if(QString(elm->Name()) == QString("Joint")){
+            qDebug()<<__FUNCTION__<<__LINE__;
             NBJoint* joint = NBJoint::create(elm);
             addJoint(joint);
         }
         n = n->NextSibling();
     }
+}
+
+void NBLayer::clear()
+{
+    clearAllBody();
+    clearAllJoint();
 }
 
 int NBLayer::addBody(NBBody *body)
@@ -152,6 +160,14 @@ NBObject *NBLayer::getNBFixture(QString rid, QString fid)
 QStringList NBLayer::getBodyList()
 {
     return bodys.keys();
+}
+
+void NBLayer::clearAllBody()
+{
+    QStringList bodyList = getBodyList();
+    foreach(QString bodyID, bodyList){
+        delBody(bodyID);
+    }
 }
 
 QStringList NBLayer::getFixtureList(QString rid)
@@ -263,4 +279,12 @@ QStringList NBLayer::getJointList()
         sl.append(QString::fromStdString(str));
     }
     return sl;
+}
+
+void NBLayer::clearAllJoint()
+{
+    QStringList jointList = getJointList();
+    foreach(QString jointID,jointList){
+        delJoint(jointID.toStdString());
+    }
 }

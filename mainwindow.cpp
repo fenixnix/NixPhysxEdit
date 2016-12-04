@@ -8,7 +8,6 @@
 #include "formshapeedgeedit.h"
 #include "dialogshapecircleedit.h"
 #include "dialogshapepolygonedit.h"
-#include "b2objfactory.h"
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -541,15 +540,6 @@ void MainWindow::on_listWidget_Fixtures_customContextMenuRequested(const QPoint 
     }
 }
 
-void MainWindow::on_actionTest_read_triggered()
-{
-    ///test code
-    B2ObjFactory::the()->setWorld(B2Physx::the()->world);
-    B2ObjFactory::the()->loadUnitFromFile("test","walker.xml");
-    B2ObjFactory::the()->createUnitImp("test",b2Transform(b2Vec2(5,0),b2Rot(1)));
-    this->update();
-}
-
 void MainWindow::on_actionCircle_Object_triggered()
 {
     QString bodyID = genAutoName("body",NBDataMnger::the()->layer.getBodyList());
@@ -564,4 +554,9 @@ void MainWindow::on_actionSquare_Object_triggered()
     NBBody* body = addNewBody(bodyID);
     QString fixtureID = genAutoName("shape",body->getFixtureList());
     addNewFixture(fixtureID,"Quad");
+}
+
+void MainWindow::on_actionClear_triggered()
+{
+    NBDataMnger::the()->layer.clear();
 }

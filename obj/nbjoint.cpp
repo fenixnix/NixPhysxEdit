@@ -23,13 +23,13 @@ b2JointDef *NBJoint::getInitDef(B2Unit *unit)
 NBJoint *NBJoint::create(tinyxml2::XMLNode *node)
 {
     NBJoint *joint = nullptr;
-    if(string(node->ToElement()->Attribute("type")) == string("distance")){
+    if(node->ToElement()->IntAttribute("type") == e_distanceJoint){
         joint = new NBJointDistance;
     }
-    if(string(node->ToElement()->Attribute("type")) == string("revolute")){
+    if(node->ToElement()->IntAttribute("type") == e_revoluteJoint){
         joint = new NBJointRevolute;
     }
-    if(string(node->ToElement()->Attribute("type")) == string("prismatic")){
+    if(node->ToElement()->IntAttribute("type") == e_prismaticJoint){
         joint = new NBJointPrismatic;
     }
     joint->read(node);

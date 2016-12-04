@@ -74,7 +74,6 @@ private slots:
     void on_actionExport_Unit_triggered();
     void on_actionImport_Unit_triggered();
     void on_listWidget_Fixtures_clicked(const QModelIndex &index);
-    void on_actionTest_read_triggered();
     void on_actionCircle_Object_triggered();
     void on_actionSquare_Object_triggered();
 
@@ -82,6 +81,8 @@ private slots:
     void on_listWidget_Joint_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_Shape_customContextMenuRequested(const QPoint &pos);
     void on_listWidget_Fixtures_customContextMenuRequested(const QPoint &pos);
+
+    void on_actionClear_triggered();
 
 private:
     Ui::MainWindow *ui;
