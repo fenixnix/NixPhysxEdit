@@ -18,7 +18,7 @@ void FormShapeEdgeEdit::on_pushButton_OK_clicked()
 {
     QString id;
     id = QInputDialog::getText(this,"Shape","ID");
-    NBDataMnger::the()->createShape(id,ui->openGLWidget->createShape());
+    NBDataMnger::the()->addShape(id,ui->openGLWidget->createShape());
     this->close();
     delete this;
 }

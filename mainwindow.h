@@ -15,6 +15,8 @@
 #include "formjointrevolute.h"
 #include "AttributeUI/uijointprismatic.h"
 
+#include "dialogfilter.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -36,6 +38,7 @@ public slots:
     void updateBodyList();
     void updateFixtureList(QString bodyID);
     void updateJointList();
+    void updateFilterList();
     void updateAllList();
 
     void updateAtt(NBObject* obj);
@@ -51,7 +54,6 @@ public slots:
 
 private slots:
     void on_actionAdd_triggered();
-    void on_actionWorld_Box_triggered();
     void on_actionRun_triggered();
     void on_listWidget_RigidBodys_clicked(const QModelIndex &index);
     void on_actionGravity_triggered();
@@ -83,6 +85,8 @@ private slots:
     void on_listWidget_Fixtures_customContextMenuRequested(const QPoint &pos);
 
     void on_actionClear_triggered();
+
+    void on_actionFilter_triggered();
 
 private:
     Ui::MainWindow *ui;

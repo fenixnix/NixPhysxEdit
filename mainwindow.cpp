@@ -116,9 +116,16 @@ void MainWindow::updateJointList()
     ui->listWidget_Joint->addItems(NBDataMnger::the()->layer.getJointList());
 }
 
+void MainWindow::updateFilterList()
+{
+    ui->listWidget_Filter->clear();
+    ui->listWidget_Filter->addItems(NBDataMnger::the()->getFilterList());
+}
+
 void MainWindow::updateAllList()
 {
     updateShapeList();
+    updateFilterList();
     updateJointList();
     updateBodyList();
     updateFixtureList("");
@@ -238,11 +245,6 @@ void MainWindow::on_actionAdd_triggered()
     addNewBody(id);
 }
 
-void MainWindow::on_actionWorld_Box_triggered()
-{
-
-}
-
 void MainWindow::on_actionRun_triggered()
 {
     const int boxWidth = 10;
@@ -302,7 +304,7 @@ void MainWindow::on_actionPolygon_triggered()
     edit.set(shape);
     if(edit.exec()){
         QString newShapeID = QInputDialog::getText(this,"Polygon","ID");
-        NBDataMnger::the()->createShape(newShapeID,shape);
+        NBDataMnger::the()->addShape(newShapeID,shape);
         return;
     }
     delete shape;
@@ -351,8 +353,7 @@ void MainWindow::on_actionNew_triggered()
 
 void MainWindow::on_actionSave_triggered()
 {
-    QString fileName = QFileDialog::getSaveFileName();
-    NBDataMnger::the()->save(fileName);
+    NBDataMnger::the()->saveAllPrefab();
 }
 
 void MainWindow::on_actionDistance_triggered()
@@ -559,4 +560,22 @@ void MainWindow::on_actionSquare_Object_triggered()
 void MainWindow::on_actionClear_triggered()
 {
     NBDataMnger::the()->layer.clear();
+}
+
+void MainWindow::on_actionFilter_triggered()
+{
+    QStringList filterList = NBDataMnger::the()->getFilterList();
+    QString autoName = genAutoName("filter",filterList);
+    QString filterID = QInputDialog::getText(this,"Filter","ID",QLineEdit::Normal,autoName);
+    if(filterList.contains(filterID)){
+        qDebug()<<__FUNCTION__<<__LINE__;
+        QMessageBox::warning(this,"Waring!!!","exist filter name!!!");
+        return;
+    }
+    DialogFilter dlg;
+    if(dlg.exec()==QDialog::Accepted){
+        b2Filter filter = dlg.get();
+        NBDataMnger::the()->addFilter(filterID,filter);
+        updateFilterList();
+    }
 }

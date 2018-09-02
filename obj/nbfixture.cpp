@@ -77,7 +77,7 @@ NBObject *NBFixture::read(XMLNode *node)
     def.density = elm->FirstChildElement("density")->FloatAttribute("value");
     def.isSensor = elm->FirstChildElement("isSensor")->BoolAttribute("value");
     def.shape = NBDataMnger::the()->readShape(elm->FirstChildElement("Shape"));
-    NBDataMnger::the()->readFilter(elm,&def.filter);
+    def.filter = NBDataMnger::the()->readFilter(elm->FirstChildElement("Filter"));
     return this;
 }
 

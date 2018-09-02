@@ -2,10 +2,17 @@
 
 NBDataMnger::NBDataMnger()
 {
-    import("DefShape.xml");
+    loadShapePrefab();
+    loadFilterPrefab();
 }
 
-int NBDataMnger::createShape(QString id, b2Shape* s)
+void NBDataMnger::saveAllPrefab()
+{
+    saveFilterPrefab();
+    saveShapePrefab();
+}
+
+int NBDataMnger::addShape(QString id, b2Shape* s)
 {
     if(shapes.contains(id)){
         return 1;
@@ -14,12 +21,7 @@ int NBDataMnger::createShape(QString id, b2Shape* s)
     return 0;
 }
 
-void NBDataMnger::load(string fileName)
-{
-
-}
-
-void NBDataMnger::import(string fileName)
+void NBDataMnger::loadShapePrefab(string fileName)
 {
     qDebug()<<__FUNCTION__<<QString::fromStdString(fileName);
     tinyxml2::XMLDocument dom;
@@ -30,85 +32,87 @@ void NBDataMnger::import(string fileName)
         XMLElement *elm = n->ToElement();
         qDebug()<<elm->Name();
         if(string(elm->Name()) == "Shape"){
-            createShape(elm);
+            addShape(elm);
         }
         n = n->NextSibling();
     }
 }
 
-void NBDataMnger::shapeExport(QString fileName, QString shapeID)
-{
-
-}
-
-int NBDataMnger::createShape(XMLElement *elm)
+int NBDataMnger::addShape(XMLElement *elm)
 {
     QString id(elm->Attribute("id"));
-    int shapeType = elm->IntAttribute("shapeType");
-    qDebug()<<__FUNCTION__<<id<<shapeType;
-    if(shapeType == b2Shape::e_circle){
-        b2CircleShape* shape = new b2CircleShape;
-        XMLElement* centerElm = elm->FirstChildElement("center");
-        shape->m_p.x = centerElm->FloatAttribute("x");
-        shape->m_p.y = centerElm->FloatAttribute("y");
-        shape->m_radius = elm->FirstChildElement("radius")->FloatAttribute("value");
-        shapes[id] = shape;
-        return 0;
-    }
-
-    if(shapeType == b2Shape::e_edge){
-        b2EdgeShape* shape = new b2EdgeShape;
-        XMLNode* n = elm->FirstChild();
-        XMLElement* v1 = elm->FirstChildElement("v1");
-        shape->m_vertex1.x = v1->FloatAttribute("x");
-        shape->m_vertex1.y = v1->FloatAttribute("y");
-        XMLElement* v2 = elm->FirstChildElement("v2");
-        shape->m_vertex2.x = v2->FloatAttribute("x");
-        shape->m_vertex2.y = v2->FloatAttribute("y");
-        shapes[id] = shape;
-        return 0;
-    }
-
-    if(shapeType == b2Shape::e_polygon){
-        b2PolygonShape* shape = new b2PolygonShape;
-        XMLNode* n = elm->FirstChild();
-        QVector<b2Vec2> vecs;
-        while(n){
-            XMLElement* vecElm = n->ToElement();
-            b2Vec2 vec(vecElm->FloatAttribute("x"),vecElm->FloatAttribute("y"));
-            vecs.append(vec);
-            n = n->NextSibling();
-        }
-        shape->Set(vecs.data(),vecs.size());
-        shapes[id] = shape;
-        return 0;
-    }
-
-    if(shapeType == b2Shape::e_chain){
-        b2ChainShape* shape = new b2ChainShape;
-        XMLNode* n = elm->FirstChild();
-        QVector<b2Vec2> vecs;
-        while(n){
-            XMLElement* vecElm = n->ToElement();
-            b2Vec2 vec(vecElm->FloatAttribute("x"),vecElm->FloatAttribute("y"));
-            vecs.append(vec);
-            n = n->NextSibling();
-        }
-        shape->CreateChain(vecs.data(),vecs.size());
+    if(shapes.find(id)==shapes.end()){
+        b2Shape* shape = readShape(elm);
         shapes[id] = shape;
         return 0;
     }
     return 1;
+
+//    int shapeType = elm->IntAttribute("shapeType");
+//    qDebug()<<__FUNCTION__<<id<<shapeType;
+//    if(shapeType == b2Shape::e_circle){
+//        b2CircleShape* shape = new b2CircleShape;
+//        XMLElement* centerElm = elm->FirstChildElement("center");
+//        shape->m_p.x = centerElm->FloatAttribute("x");
+//        shape->m_p.y = centerElm->FloatAttribute("y");
+//        shape->m_radius = elm->FirstChildElement("radius")->FloatAttribute("value");
+//        shapes[id] = shape;
+//        return 0;
+//    }
+
+//    if(shapeType == b2Shape::e_edge){
+//        b2EdgeShape* shape = new b2EdgeShape;
+//        XMLNode* n = elm->FirstChild();
+//        XMLElement* v1 = elm->FirstChildElement("v1");
+//        shape->m_vertex1.x = v1->FloatAttribute("x");
+//        shape->m_vertex1.y = v1->FloatAttribute("y");
+//        XMLElement* v2 = elm->FirstChildElement("v2");
+//        shape->m_vertex2.x = v2->FloatAttribute("x");
+//        shape->m_vertex2.y = v2->FloatAttribute("y");
+//        shapes[id] = shape;
+//        return 0;
+//    }
+
+//    if(shapeType == b2Shape::e_polygon){
+//        b2PolygonShape* shape = new b2PolygonShape;
+//        XMLNode* n = elm->FirstChild();
+//        QVector<b2Vec2> vecs;
+//        while(n){
+//            XMLElement* vecElm = n->ToElement();
+//            b2Vec2 vec(vecElm->FloatAttribute("x"),vecElm->FloatAttribute("y"));
+//            vecs.append(vec);
+//            n = n->NextSibling();
+//        }
+//        shape->Set(vecs.data(),vecs.size());
+//        shapes[id] = shape;
+//        return 0;
+//    }
+
+//    if(shapeType == b2Shape::e_chain){
+//        b2ChainShape* shape = new b2ChainShape;
+//        XMLNode* n = elm->FirstChild();
+//        QVector<b2Vec2> vecs;
+//        while(n){
+//            XMLElement* vecElm = n->ToElement();
+//            b2Vec2 vec(vecElm->FloatAttribute("x"),vecElm->FloatAttribute("y"));
+//            vecs.append(vec);
+//            n = n->NextSibling();
+//        }
+//        shape->CreateChain(vecs.data(),vecs.size());
+//        shapes[id] = shape;
+//        return 0;
+//    }
+//    return 1;
 }
 
-void NBDataMnger::save(QString fileName)
+void NBDataMnger::saveShapePrefab(string fileName)
 {
     tinyxml2::XMLDocument dom;
     XMLNode* root = dom.LinkEndChild(dom.NewElement("NBData"));
     foreach(QString shapeId,shapes.keys()){
         writeShape(&dom,root,shapeId.toStdString(),shapes[shapeId]);
     }
-    dom.SaveFile(fileName.toStdString().c_str());
+    dom.SaveFile(fileName.c_str());
 }
 
 int NBDataMnger::delShape(QString id)
@@ -243,24 +247,55 @@ b2Shape *NBDataMnger::readShape(XMLNode *node)
     return shape;
 }
 
+void NBDataMnger::loadFilterPrefab(string fileName)
+{
+    qDebug()<<__FUNCTION__<<QString::fromStdString(fileName);
+    tinyxml2::XMLDocument dom;
+    dom.LoadFile(fileName.c_str());
+    XMLNode *root = dom.RootElement();
+    XMLNode *n = root->FirstChild();
+    while(n){
+        XMLElement *elm = n->ToElement();
+        qDebug()<<elm->Name();
+        if(string(elm->Name()) == "Filter"){
+            addFilter(elm);
+        }
+        n = n->NextSibling();
+    }
+}
+
+void NBDataMnger::saveFilterPrefab(string fileName)
+{
+    tinyxml2::XMLDocument dom;
+    XMLNode* root = dom.LinkEndChild(dom.NewElement("NBData"));
+    foreach(QString filterID,filterDefs.keys()){
+        writeFilter(&dom,root,filterID.toStdString(),&filterDefs[filterID]);
+    }
+    dom.SaveFile(fileName.c_str());
+}
+
 void NBDataMnger::writeFilter(tinyxml2::XMLDocument *dom, XMLNode *parent, string id, b2Filter *filter)
 {
     using namespace tinyxml2;
-    XMLElement* categoryBits = parent->LinkEndChild(dom->NewElement("categoryBits"))->ToElement();
+    XMLElement* root = parent->LinkEndChild(dom->NewElement("Filter"))->ToElement();
+    root->SetAttribute("id",id.c_str());
+    XMLElement* categoryBits = root->LinkEndChild(dom->NewElement("categoryBits"))->ToElement();
     categoryBits->SetAttribute("value",filter->categoryBits);
-    XMLElement* maskBits = parent->LinkEndChild(dom->NewElement("maskBits"))->ToElement();
+    XMLElement* maskBits = root->LinkEndChild(dom->NewElement("maskBits"))->ToElement();
     maskBits->SetAttribute("value",filter->maskBits);
-    XMLElement* groupIndex = parent->LinkEndChild(dom->NewElement("groupIndex"))->ToElement();
+    XMLElement* groupIndex = root->LinkEndChild(dom->NewElement("groupIndex"))->ToElement();
     groupIndex->SetAttribute("value",filter->groupIndex);
 }
 
-void NBDataMnger::readFilter(XMLNode *node, b2Filter *filter)
+b2Filter NBDataMnger::readFilter(XMLNode *node)
 {
     using namespace tinyxml2;
+    b2Filter filter;
     XMLElement* elm = node->ToElement();
-    filter->categoryBits = elm->FirstChildElement("categoryBits")->IntAttribute("value");
-    filter->maskBits = elm->FirstChildElement("maskBits")->IntAttribute("value");
-    filter->groupIndex = elm->FirstChildElement("groupIndex")->IntAttribute("value");
+    filter.categoryBits = elm->FirstChildElement("categoryBits")->IntAttribute("value");
+    filter.maskBits = elm->FirstChildElement("maskBits")->IntAttribute("value");
+    filter.groupIndex = elm->FirstChildElement("groupIndex")->IntAttribute("value");
+    return filter;
 }
 
 b2Shape *NBDataMnger::getShape(QString id)
@@ -283,6 +318,33 @@ b2Shape *NBDataMnger::getShapeClone(QString id)
 QStringList NBDataMnger::getShapeList()
 {
     return shapes.keys();
+}
+
+int NBDataMnger::addFilter(QString id, b2Filter filter)
+{
+    if(!filterDefs.contains(id)){
+        filterDefs[id] = filter;
+        return 0;
+    }
+    qDebug()<<__FUNCTION__<<__LINE__;
+    return 1;
+}
+
+int NBDataMnger::addFilter(XMLElement *elm)
+{
+    QString id(elm->Attribute("id"));
+    if(!filterDefs.contains(id)){
+        b2Filter filter = readFilter(elm);
+        filterDefs[id] = filter;
+        return 0;
+    }
+    qDebug()<<__FUNCTION__<<__LINE__;
+    return 1;
+}
+
+QStringList NBDataMnger::getFilterList()
+{
+    return filterDefs.keys();
 }
 
 void NBDataMnger::draw(NQOpenGL2DWidget *widget)

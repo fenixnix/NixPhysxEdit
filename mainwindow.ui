@@ -104,7 +104,7 @@
          <enum>QTabWidget::East</enum>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="tab_5">
          <attribute name="title">
@@ -145,6 +145,16 @@
              </property>
             </item>
            </widget>
+          </item>
+         </layout>
+        </widget>
+        <widget class="QWidget" name="tab">
+         <attribute name="title">
+          <string>Filter</string>
+         </attribute>
+         <layout class="QVBoxLayout" name="verticalLayout">
+          <item>
+           <widget class="QListWidget" name="listWidget_Filter"/>
           </item>
          </layout>
         </widget>

@@ -67,7 +67,8 @@ SOURCES += main.cpp\
     AttributeUI/uijointprismatic.cpp \
     labeledspinbox.cpp \
     formvector2d.cpp \
-    nbqgeditjointprismatic.cpp
+    nbqgeditjointprismatic.cpp \
+    dialogfilter.cpp
 
 HEADERS  += mainwindow.h \
     ../_src/b2physx.h \
@@ -124,7 +125,8 @@ HEADERS  += mainwindow.h \
     AttributeUI/uijointprismatic.h \
     labeledspinbox.h \
     formvector2d.h \
-    nbqgeditjointprismatic.h
+    nbqgeditjointprismatic.h \
+    dialogfilter.h
 
 FORMS    += mainwindow.ui \
     formrigidbody.ui \
@@ -143,7 +145,8 @@ FORMS    += mainwindow.ui \
     formjoint.ui \
     formjointprismaticatt.ui \
     labeledspinbox.ui \
-    formvector2d.ui
+    formvector2d.ui \
+    dialogfilter.ui
 
 INCLUDEPATH += ../_src/
 include(D:/workspace/include/Box2D.pri)
